@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8" http-equiv="content-type" content="text/html">
+
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.1.3/css/bootstrap.min.css}" />
+
+    <script th:src="@{/webjars/jquery/3.3.1-1/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/4.1.3/js/bootstrap.min.js}"></script>
+
+    <title>Knight list</title>
+</head>
+<body>
+<div class="container">
+
+    Posiadane złoto :<span th:text="${playerinformation.gold}"/>
+
+    <a th:href="${'/checkQuests'}">Aktualizuj zadania</a>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <td>Imie rycerza</td>
+                <td>Poziom</td>
+                <td>Zadanie</td>
+                <td></td>
+            </tr>
+        </thead>
+        <tbody th:each="knight : ${knights}">
+            <tr>
+                <td th:text="${knight.name}"></td>
+                <td th:text="${knight.level}"></td>
+                <td>
+                    <span th:if="${knight.quest==null}">Brak aktualnego zadania <a th:href="${'/assignQuest?knightId='+knight.id}">Przypisz zadanie</a></span>
+                    <span th:if="${knight.quest!=null}" th:text="${knight.quest.description}"/>
+                </td>
+                <td><a th:href="${'/knight?id='+knight.id}"/>Podgląd</td>
+                <td><a th:href="${'/knight/delete/'+knight.id}"/>Usun rycerza</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="row">
+        <a href="/newknight">Dodaj rycerza</a>
+    </div>
+
+</div>
+</body>
+</html>
